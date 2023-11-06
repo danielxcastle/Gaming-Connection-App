@@ -97,3 +97,76 @@ def user_sign_up_platform():
         db.session.rollback()
         raise APIException(str(e), 500)
 
+@api.route('/add-platform', methods=["POST"])
+@jwt_required()
+def add_user_platform():
+    user_id = get_jwt_identity()
+    user = User.query.get(user_id)
+
+    if user is None:
+        raise APIException("No such user!", 404)
+
+    platform_data = request.json
+    platform_name = platform_data.get("platform_name")
+    username = platform_data.get("username")
+
+    if not platform_name or not username:
+        raise APIException("Incomplete platform data in the request", 400)
+
+    new_platform = UserPlatform(user_id=user_id, platform_name=platform_name, username=username)
+    db.session.add(new_platform)
+
+    try:
+        db.session.commit()
+        return jsonify(message="Platform added successfully"), 201
+    except Exception as e:
+        db.session.rollback()
+        raise APIException(str(e), 500)
+
+
+# To Delete a UserPlatform
+@api.route('/delete-platform/<int:platform_id>', methods=["DELETE"])
+@jwt_required()
+def delete_user_platform(platform_id):
+    user_id = get_jwt_identity()
+    user = User.query.get(user_id)
+
+    if user is None:
+        raise APIException("No such user!", 404)
+
+    platform = UserPlatform.query.filter_by(id=platform_id, user_id=user_id).first()
+
+    if platform is None:
+        raise APIException("No such platform associated with the user!", 404)
+
+    db.session.delete(platform)
+    db.session.commit()
+
+    return jsonify(message="Platform deleted successfully"), 200
+
+
+# To Rename a UserPlatform
+@api.route('/rename-platform/<int:platform_id>', methods=["PUT"])
+@jwt_required()
+def rename_user_platform(platform_id):
+    user_id = get_jwt_identity()
+    user = User.query.get(user_id)
+
+    if user is None:
+        raise APIException("No such user!", 404)
+
+    platform = UserPlatform.query.filter_by(id=platform_id, user_id=user_id).first()
+
+    if platform is None:
+        raise APIException("No such platform associated with the user!", 404)
+
+    platform_data = request.json
+    new_platform_name = platform_data.get("new_platform_name")
+
+    if not new_platform_name:
+        raise APIException("Incomplete platform data in the request", 400)
+
+    platform.platform_name = new_platform_name
+    db.session.commit()
+
+    return jsonify(message="Platform renamed successfully"), 200

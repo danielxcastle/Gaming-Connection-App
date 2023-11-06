@@ -125,7 +125,69 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 				//reset the global store
 				setStore({ demo: demo });
-			}
+			},
+			addPlatform: async ({ user_id, platform_name, username }) => {
+                try {
+                    const response = await fetch(`${baseApiUrl}/api/sign-up-platform`, {
+                        method: 'POST',
+                        body: JSON.stringify({ user_id, platform_name, username }),
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
+                        }
+                    });
+                    if (response.ok) {
+                        // Example: get updated user platforms and update the store accordingly
+                        // const updatedPlatforms = await actions.getUserPlatforms();
+                        // setStore({ platforms: updatedPlatforms });
+                        return response.json();
+                    }
+                    throw new Error('Failed to add platform');
+                } catch (error) {
+                    console.error('Error adding platform:', error);
+                    throw error;
+                }
+            },
+
+            // New action to delete a platform
+            deletePlatform: async (platform_id) => {
+                try {
+                    const response = await fetch(`${baseApiUrl}/api/delete-platform/${platform_id}`, {
+                        method: 'DELETE',
+                        headers: {
+                            'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
+                        }
+                    });
+                    if (response.ok) {
+                        return response.json();
+                    }
+                    throw new Error('Failed to delete platform');
+                } catch (error) {
+                    console.error('Error deleting platform:', error);
+                    throw error;
+                }
+            },
+
+            // New action to rename a platform
+            renamePlatform: async (platform_id, newPlatformName) => {
+                try {
+                    const response = await fetch(`${baseApiUrl}/api/rename-platform/${platform_id}`, {
+                        method: 'PUT',
+                        body: JSON.stringify({ new_platform_name: newPlatformName }),
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
+                        }
+                    });
+                    if (response.ok) {
+                        return response.json();
+                    }
+                    throw new Error('Failed to rename platform');
+                } catch (error) {
+                    console.error('Error renaming platform:', error);
+                    throw error;
+                }
+            }
 		}
 	};
 };
