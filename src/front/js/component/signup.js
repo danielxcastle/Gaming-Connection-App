@@ -21,9 +21,8 @@ export const SignUp = ({ onClose }) => {
             });
 
             if (response.status === 201) {
-                // Close the SignUp modal upon successful signup
-                onClose(); // Invoke the function to close the modal
-                navigate("/"); // Navigate to the home page or the desired route
+                onClose(); 
+                navigate("/"); 
             }
         } catch (error) {
             if (error.response && error.response.data && error.response.data.message) {
