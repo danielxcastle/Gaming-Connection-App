@@ -1,12 +1,21 @@
 from flask_sqlalchemy import SQLAlchemy
+from api.utils import APIException
+from base64 import b64encode
+import os
+from sqlalchemy.orm import relationship
+
+from werkzeug.security import check_password_hash ,generate_password_hash
 
 db = SQLAlchemy()
 
 class User(db.Model):
+    __tablename__ = "user"
     id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(50), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
-    password = db.Column(db.String(80), unique=False, nullable=False)
-    is_active = db.Column(db.Boolean(), unique=False, nullable=False)
+    hashed_password = db.Column(db.String(900), unique=False, nullable=False)    
+    platforms = db.relationship('UserPlatform', backref='user', lazy=True)
+    salt = db.Column(db.String(900), nullable=False)
 
     def __repr__(self):
         return f'<User {self.email}>'
@@ -14,6 +23,49 @@ class User(db.Model):
     def serialize(self):
         return {
             "id": self.id,
+            "username": self.username,
             "email": self.email,
-            # do not serialize the password, its a security breach
+            "platforms": [platform.serialize() for platform in self.platforms]
         }
+
+    def __init__(self, username, hashed_password, email ):
+        already_exists = User.query.filter_by(username=username).one_or_none()
+        if already_exists is not None:
+            raise APIException("User already exists", 400)
+        self.salt = b64encode(os.urandom(32)).decode("utf-8")
+        self.hashed_password = generate_password_hash(hashed_password + self.salt)
+        self.username = username
+        self.email = email
+        db.session.add(self)
+        try:
+            db.session.commit()
+        except Exception as e:
+            db.session.rollback()
+            raise APIException(str(e), 500)
+        
+    def check_password(self, password_to_check):
+        return check_password_hash(self.hashed_password, f"{password_to_check}{self.salt}")
+
+class UserPlatform(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    platform_name = db.Column(db.String(50), nullable=False)
+    username = db.Column(db.String(50), nullable=False)
+
+    def serialize(self):
+        return {
+            "platform_name": self.platform_name,
+            "username": self.username
+        }
+
+    def __init__(self, user_id, platform_name, username):
+        self.user_id = user_id
+        self.platform_name = platform_name
+        self.username = username
+
+        db.session.add(self)
+        try:
+            db.session.commit()
+        except Exception as e:
+            db.session.rollback()
+            raise APIException(str(e), 500)

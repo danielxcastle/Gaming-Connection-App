@@ -1,3 +1,6 @@
+
+const baseApiUrl = process.env.BACKEND_URL || "http://127.0.0.1:3001";
+
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
@@ -13,23 +16,99 @@ const getState = ({ getStore, getActions, setStore }) => {
 					background: "white",
 					initial: "white"
 				}
-			]
+			],
+			accessToken: undefined,
+			user: undefined
 		},
+
+
 		actions: {
-			// Use getActions to call a function within a fuction
-			exampleFunction: () => {
-				getActions().changeColor(0, "green");
+
+			logIn: async ({ email, hashed_password }) => {
+				const response = await fetch(
+					`${baseApiUrl}/api/log-in`, {
+					method: "POST",
+					body: JSON.stringify({
+						email: email,
+						hashed_password: hashed_password,
+					}),
+					headers: {
+						"Content-Type": "application/json"
+					}
+				}
+				)
+				const body = await response.json();
+				if (response.ok) {
+					setStore({
+						accessToken: body.access_token,
+						user: body.user
+					});
+					console.log(body.user)
+					localStorage.setItem("accessToken", body.access_token);
+					localStorage.setItem("user", JSON.stringify(body.user));
+					return true
+				}
+			}
+
+			,
+
+
+			logOut: () => {
+				setStore({
+					accessToken: undefined,
+					user: undefined,
+				});
+
+				localStorage.removeItem("accessToken");
+				localStorage.removeItem("user");
+
+			},
+			signUp: async ({ username, email, hashed_password }) => {
+				const response = await fetch(`${baseApiUrl}/api/sign-up`, {
+					method: "POST",
+					body: JSON.stringify({
+						username: username,
+						email: email,
+						hashed_password: hashed_password
+					}),
+					headers: {
+						"Content-Type": "application/json",
+					},
+				});
+
+				if (response.ok) {
+					const body = await response.json();
+					setStore({
+						accessToken: body.access_token,
+						user: body.user,
+					});
+
+					localStorage.setItem("accessToken", body.access_token);
+					localStorage.setItem("user", JSON.stringify(body.user));
+				}
+
+				return response;
+			},
+			loadSomeData: () => {
+				fetch("www.thecocktaildb.com/api/json/v1/1/search.php?f=a")
+					.then((response) => response.json())
+					.then((data) => {
+						// always console log first
+						console.log(data)
+						setStore({ cocktails: data.results })
+					})
 			},
 
+
 			getMessage: async () => {
-				try{
+				try {
 					// fetching data from the backend
 					const resp = await fetch(process.env.BACKEND_URL + "/api/hello")
 					const data = await resp.json()
 					setStore({ message: data.message })
 					// don't forget to return something, that is how the async resolves
 					return data;
-				}catch(error){
+				} catch (error) {
 					console.log("Error loading message from backend", error)
 				}
 			},
