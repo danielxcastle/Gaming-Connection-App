@@ -148,3 +148,27 @@ def rename_user_platform(platform_id):
     db.session.commit()
 
     return jsonify(message="Platform renamed successfully"), 200
+
+    # To Get User's Platforms
+@api.route('/user/<int:user_id>/platforms', methods=["GET"])
+@jwt_required()
+def get_user_platforms(user_id):
+    current_user_id = get_jwt_identity()
+
+    if current_user_id != user_id:
+        raise APIException("Unauthorized access", 401)
+
+    user = User.query.get(user_id)
+    if user is None:
+        raise APIException("No such user!", 404)
+
+    user_platforms = UserPlatform.query.filter_by(user_id=user_id).all()
+
+    serialized_platforms = [{
+        "id": platform.id,
+        "user_id": platform.user_id,
+        "platform_name": platform.platform_name,
+        "username": platform.username
+    } for platform in user_platforms]
+
+    return jsonify(platforms=serialized_platforms), 200

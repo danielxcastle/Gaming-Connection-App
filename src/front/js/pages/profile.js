@@ -9,10 +9,19 @@ export const Profile = () => {
     const toAddPlatform = () => {
         navigate('/addplatform');
     };
+    const toMyPlatforms = () => {
+        navigate('/myplatforms');
+    };
 
     return (
-        <button
-            className="btn btn-primary"
-            onClick={toAddPlatform}>Add an Account!</button>
+        <div>
+            <button
+                className="btn btn-primary"
+                onClick={toAddPlatform}>Add an Account!</button>
+            <button
+                className="btn btn-primary"
+                onClick={toMyPlatforms}>My Associated Accounts</button>
+        </div>
     );
 };
+ export default Profile;

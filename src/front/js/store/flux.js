@@ -148,6 +148,27 @@ const getState = ({ getStore, getActions, setStore }) => {
 					throw error;
 				}
 			},
+			getMyPlatforms: async () => {
+				try {
+					const response = await fetch(`${baseApiUrl}/api/my-platforms`, {
+						method: 'GET',
+						headers: {
+							'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
+						}
+					});
+			
+					if (response.ok) {
+						const platforms = await response.json();
+						// Set the received platforms into the store
+						setStore({ userPlatforms: platforms });
+						return platforms;
+					}
+					throw new Error('Failed to fetch user platforms');
+				} catch (error) {
+					console.error('Error fetching user platforms:', error);
+					throw error;
+				}
+			},
 			
 
             // New action to delete a platform
