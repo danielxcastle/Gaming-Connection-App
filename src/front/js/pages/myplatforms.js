@@ -2,11 +2,6 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Context } from '../store/appContext';
 
 export const MyPlatforms = () => {
-<<<<<<< HEAD
-    const { store } = useContext(Context);
-    const [userPlatforms, setUserPlatforms] = useState([]);
-
-=======
     const { store, actions } = useContext(Context);
     const [userPlatforms, setUserPlatforms] = useState([]);
     const getPlatformIcon = platformName => {
@@ -33,7 +28,6 @@ export const MyPlatforms = () => {
 
    
     
->>>>>>> daniel
     useEffect(() => {
         const fetchUserPlatforms = async () => {
             try {
