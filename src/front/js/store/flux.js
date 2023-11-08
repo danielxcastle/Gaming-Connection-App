@@ -127,6 +127,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				setStore({ demo: demo });
 			},
 			addPlatform: async ({ user_id, platform_name, username }) => {
+<<<<<<< Updated upstream
                 try {
                     const response = await fetch(`${baseApiUrl}/api/sign-up-platform`, {
                         method: 'POST',
@@ -148,6 +149,51 @@ const getState = ({ getStore, getActions, setStore }) => {
                     throw error;
                 }
             },
+=======
+				try {
+					const response = await fetch(`${baseApiUrl}/api/user/${user_id}/platforms`, {
+						method: 'POST',
+						body: JSON.stringify({ user_id, platform_name, username }), // Adjusted here
+						headers: {
+							'Content-Type': 'application/json',
+							'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
+						}
+					});
+			
+					if (response.ok) {
+						const responseBody = await response.json();
+
+						return responseBody;
+					}
+					throw new Error('Failed to add platform');
+				} catch (error) {
+					console.error('Error adding platform:', error);
+					throw error;
+				}
+			},
+			getMyPlatforms: async () => {
+				try {
+					const response = await fetch(`${baseApiUrl}/api/my-platforms`, {
+						method: 'GET',
+						headers: {
+							'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
+						}
+					});
+			
+					if (response.ok) {
+						const platforms = await response.json();
+						// Set the received platforms into the store
+						setStore({ userPlatforms: platforms });
+						return platforms;
+					}
+					throw new Error('Failed to fetch user platforms');
+				} catch (error) {
+					console.error('Error fetching user platforms:', error);
+					throw error;
+				}
+			},
+			
+>>>>>>> Stashed changes
 
             // New action to delete a platform
             deletePlatform: async (platform_id) => {
