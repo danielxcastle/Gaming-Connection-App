@@ -102,7 +102,7 @@ def add_user_platform(user_id):
         raise APIException(str(e), 500)
 
 
-# To Delete a UserPlatform
+
 @api.route('/delete-platform/<int:platform_id>', methods=["DELETE"])
 @jwt_required()
 def delete_user_platform(platform_id):
@@ -123,7 +123,7 @@ def delete_user_platform(platform_id):
     return jsonify(message="Platform deleted successfully"), 200
 
 
-# To Rename a UserPlatform
+
 @api.route('/rename-platform/<int:platform_id>', methods=["PUT"])
 @jwt_required()
 def rename_user_platform(platform_id):
@@ -149,7 +149,7 @@ def rename_user_platform(platform_id):
 
     return jsonify(message="Platform renamed successfully"), 200
 
-    # To Get User's Platforms
+    
 @api.route('/user/<int:user_id>/platforms', methods=["GET"])
 @jwt_required()
 def get_user_platforms(user_id):

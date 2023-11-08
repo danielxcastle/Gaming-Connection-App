@@ -5,24 +5,24 @@ export const MyPlatforms = () => {
     const { store, actions } = useContext(Context);
     const [userPlatforms, setUserPlatforms] = useState([]);
     const getPlatformIcon = platformName => {
-        // Log the platform name to check what's being received
+        
         console.log('Platform Name:', platformName);
     
         switch (platformName) {
             case 'Xbox':
-                return 'fab fa-xbox'; // Replace with the actual Font Awesome class for Xbox
+                return 'fab fa-xbox'; 
             case 'PlayStation':
-                return 'fab fa-playstation'; // Replace with the actual Font Awesome class for PlayStation
+                return 'fab fa-playstation'; 
             case 'Nintendo':
-                return 'fas fa-gamepad'; // Replace with the actual Font Awesome class for Nintendo
+                return 'fas fa-gamepad'; 
             case 'Discord':
-                return 'fab fa-discord'; // Replace with the actual Font Awesome class for Discord
+                return 'fab fa-discord'; 
             case 'Steam':
-                return 'fab fa-steam'; // Replace with the actual Font Awesome class for Steam
+                return 'fab fa-steam'; 
             case 'Battle.net':
-                return 'fab fa-battle-net'; // Replace with the actual Font Awesome class for Battle.net
+                return 'fab fa-battle-net'; 
             default:
-                return ''; // If the platform name doesn't match any case, return an empty string
+                return ''; 
         }
     };
 
@@ -32,9 +32,9 @@ export const MyPlatforms = () => {
         const fetchUserPlatforms = async () => {
             try {
                 if (store && store.accessToken !== undefined && store.user && store.user.id !== undefined) {
-                    const response = await fetch(`/api/user/${store.user.id}/platforms`, {
+                    const response = await fetch(`${store.baseApiUrl}/api/user/${store.user.id}/platforms`, {
                         headers: {
-                            'Authorization': `Bearer ${store.accessToken}`
+                            'Authorization': `Bearer ${store.accessToken}`                            
                         }
                     });
                     if (response.ok) {
