@@ -127,8 +127,36 @@ const getState = ({ getStore, getActions, setStore }) => {
 				setStore({ demo: demo });
 			},
 			addPlatform: async ({ user_id, platform_name, username }) => {
+<<<<<<< HEAD
 				try {
 					const response = await fetch(`${baseApiUrl}/api/add-platform/${user_id}`, {
+=======
+<<<<<<< Updated upstream
+                try {
+                    const response = await fetch(`${baseApiUrl}/api/sign-up-platform`, {
+                        method: 'POST',
+                        body: JSON.stringify({ user_id, platform_name, username }),
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
+                        }
+                    });
+                    if (response.ok) {
+                        // Example: get updated user platforms and update the store accordingly
+                        // const updatedPlatforms = await actions.getUserPlatforms();
+                        // setStore({ platforms: updatedPlatforms });
+                        return response.json();
+                    }
+                    throw new Error('Failed to add platform');
+                } catch (error) {
+                    console.error('Error adding platform:', error);
+                    throw error;
+                }
+            },
+=======
+				try {
+					const response = await fetch(`${baseApiUrl}/api/user/${user_id}/platforms`, {
+>>>>>>> daniel
 						method: 'POST',
 						body: JSON.stringify({ user_id, platform_name, username }), // Adjusted here
 						headers: {
@@ -170,6 +198,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 			
+<<<<<<< HEAD
+=======
+>>>>>>> Stashed changes
+>>>>>>> daniel
 
             // New action to delete a platform
             deletePlatform: async (platform_id) => {
