@@ -71,35 +71,13 @@ def protected():
         raise APIException("No such user!, 404")
     return jsonify(logged_in_as=user.serialize()), 200
 
-@api.route('/sign-up-platform', methods=["POST"])
+
+
+@api.route('/add-platform/<int:user_id>', methods=["POST"])
 @jwt_required()
-def user_sign_up_platform():
-    user_id = get_jwt_identity()
-    user = User.query.get(user_id)
+def add_user_platform(user_id):
 
-    if user is None:
-        raise APIException("No such user!", 404)
 
-    platform_data = request.json
-    platform_name = platform_data.get("platform_name")
-    username = platform_data.get("username")
-
-    if not platform_name or not username:
-        raise APIException("Incomplete platform data in the request", 400)
-
-    new_platform = UserPlatform(user_id=user_id, platform_name=platform_name, username=username)
-    db.session.add(new_platform)
-    
-    try:
-        db.session.commit()
-        return jsonify(message="Platform added successfully"), 201
-    except Exception as e:
-        db.session.rollback()
-        raise APIException(str(e), 500)
-
-@api.route('/add-platform', methods=["POST"])
-@jwt_required()
-def add_user_platform():
     user_id = get_jwt_identity()
     user = User.query.get(user_id)
 

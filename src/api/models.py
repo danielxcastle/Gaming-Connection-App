@@ -54,11 +54,18 @@ class UserPlatform(db.Model):
 
     def serialize(self):
         return {
+            "id": self.id,
+            "user_id": self.user_id,
             "platform_name": self.platform_name,
             "username": self.username
         }
 
     def __init__(self, user_id, platform_name, username):
+        existing_platform = UserPlatform.query.filter_by(user_id=user_id, username=username).first()
+
+        if existing_platform is not None:
+            raise APIException("This username already exists for this user.", 400)
+
         self.user_id = user_id
         self.platform_name = platform_name
         self.username = username
