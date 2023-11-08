@@ -7,23 +7,14 @@ export const AddPlatform = () => {
     const navigate = useNavigate();
     const [formData, setFormData] = useState({
         username: '',
-        selectedPlatforms: [] // An array to hold multiple selected platforms
+        selectedPlatform: '' // A single selected platform
     });
 
-    const handleInputChange = event => {
-        const { name, checked } = event.target;
+    const allPlatforms = ['xbox', 'playstation', 'nintendo', 'discord', 'steam', 'battleNet'];
 
-        if (checked) {
-            setFormData(prevData => ({
-                ...prevData,
-                selectedPlatforms: [...prevData.selectedPlatforms, name]
-            }));
-        } else {
-            setFormData(prevData => ({
-                ...prevData,
-                selectedPlatforms: prevData.selectedPlatforms.filter(platform => platform !== name)
-            }));
-        }
+    const handleInputChange = event => {
+        const { value } = event.target;
+        setFormData({ ...formData, selectedPlatform: value });
     };
 
     useEffect(() => {
@@ -35,15 +26,16 @@ export const AddPlatform = () => {
     const onSubmit = async (event) => {
         event.preventDefault();
         try {
-            // Fetch the user_id from the context or wherever you store it
             const user_id = store.user.id; // Ensure that 'user' and 'id' exist in the store and have the correct values
+
+            const platform_name = formData.selectedPlatform || 'Some Platform'; // Default if nothing is selected
+
             const response = await actions.addPlatform({
                 user_id,
-                platform_name: 'Some Platform',
+                platform_name,
                 username: formData.username,
-                platforms: formData.selectedPlatforms
+                platforms: [formData.selectedPlatform] // Convert single selection to an array
             });
-
 
             if (response.status === 201) {
                 navigate('/');
@@ -54,85 +46,40 @@ export const AddPlatform = () => {
         }
     };
 
-return (
-    <div>
-        <h2>Add User Platform</h2>
-        <form onSubmit={onSubmit}>
-            <div>
-                <h3>Choose Platform:</h3>
+    return (
+        <div>
+            <h2>Add User Platform</h2>
+            <form onSubmit={onSubmit}>
+                <div>
+                    <h3>Choose Platform:</h3>
+                    {allPlatforms.map(platform => (
+                        <label key={platform}>
+                            <input
+                                type="radio"
+                                name="platform"
+                                value={platform}
+                                checked={formData.selectedPlatform === platform}
+                                onChange={handleInputChange}
+                            />
+                            <i className={`fab fa-${platform}`}></i> {/* Font Awesome icon */}
+                            {platform.charAt(0).toUpperCase() + platform.slice(1)}
+                        </label>
+                    ))}
+                </div>
                 <label>
+                    Username:
                     <input
-                        type="checkbox"
-                        name="xbox"
-                        checked={formData.selectedPlatforms.includes("xbox")}
-                        onChange={handleInputChange}
+                        type="text"
+                        name="username"
+                        value={formData.username}
+                        onChange={e => setFormData({ ...formData, username: e.target.value })}
                     />
-                    <i className="fab fa-xbox"></i> Xbox
                 </label>
-                <label>
-                    <input
-                        type="checkbox"
-                        name="playstation"
-                        checked={formData.selectedPlatforms.includes("playstation")}
-                        onChange={handleInputChange}
-                    />
-                    <i className="fab fa-playstation"></i> PlayStation
-                </label>
-                <label>
-                    <input
-                        type="checkbox"
-                        name="nintendo"
-                        checked={formData.selectedPlatforms.includes("nintendo")}
-                        onChange={handleInputChange}
-                    />
-                    <i className="fas fa-gamepad"></i> Nintendo
-                </label>
-                <label>
-                    <input
-                        type="checkbox"
-                        name="discord"
-                        checked={formData.selectedPlatforms.includes("discord")}
-                        onChange={handleInputChange}
-                    />
-                    <i className="fab fa-discord"></i> Discord
-                </label>
-                <label>
-                    <input
-                        type="checkbox"
-                        name="steam"
-                        checked={formData.selectedPlatforms.includes("steam")}
-                        onChange={handleInputChange}
-                    />
-                    <i className="fab fa-steam"></i> Steam
-                </label>
-                <label>
-                    <input
-                        type="checkbox"
-                        name="battleNet"
-                        checked={formData.selectedPlatforms.includes("battleNet")}
-                        onChange={handleInputChange}
-                    />
-                    <i className="fab fa-battle-net"></i> Battle.net
-                </label>
-            </div>
-            <label>
-                Username:
-                <input
-                    type="text"
-                    name="username"
-                    value={formData.username}
-                    onChange={e => setFormData({ ...formData, username: e.target.value })}
-                />
-            </label>
-            <div></div>
-            <button type="submit">Add Platform</button>
-        </form>
-    </div>
-);
-// ...
-
-// ...
-
+                <div></div>
+                <button type="submit">Add Platform</button>
+            </form>
+        </div>
+    );
 };
 
 export default AddPlatform;
