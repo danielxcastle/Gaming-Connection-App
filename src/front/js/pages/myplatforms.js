@@ -9,17 +9,17 @@ export const MyPlatforms = () => {
         console.log('Platform Name:', platformName);
     
         switch (platformName) {
-            case 'Xbox':
+            case 'xbox':
                 return 'fab fa-xbox'; 
-            case 'PlayStation':
+            case 'playStation':
                 return 'fab fa-playstation'; 
-            case 'Nintendo':
+            case 'nintendo':
                 return 'fas fa-gamepad'; 
-            case 'Discord':
+            case 'discord':
                 return 'fab fa-discord'; 
-            case 'Steam':
+            case 'steam':
                 return 'fab fa-steam'; 
-            case 'Battle.net':
+            case 'battle.net':
                 return 'fab fa-battle-net'; 
             default:
                 return ''; 

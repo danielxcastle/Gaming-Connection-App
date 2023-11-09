@@ -10,7 +10,7 @@ export const AddPlatform = () => {
         selectedPlatform: '' // A single selected platform
     });
 
-    const allPlatforms = ['xbox', 'playstation', 'nintendo', 'discord', 'steam', 'battleNet'];
+    const allPlatforms = ['xbox', 'playstation', 'nintendo', 'discord', 'steam', 'battle.net'];
 
     const handleInputChange = event => {
         const { value } = event.target;

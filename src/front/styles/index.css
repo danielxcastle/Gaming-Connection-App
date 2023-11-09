@@ -1,5 +1,9 @@
 /* CSS */
-
+.navbar-brand {
+    max-width: 120px;
+    max-height: 120px;
+    display: flex;
+}
 .signup-modal-overlay {
     position: fixed;
     top: 0;
