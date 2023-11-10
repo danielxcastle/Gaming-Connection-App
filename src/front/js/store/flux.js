@@ -67,32 +67,33 @@ const getState = ({ getStore, getActions, setStore }) => {
 				localStorage.removeItem("user");
 
 			},
-			signUp: async ({ username, email, hashed_password }) => {
+			signUp: async ({ username, email, password }) => {
 				const response = await fetch(`${baseApiUrl}/api/sign-up`, {
 					method: "POST",
 					body: JSON.stringify({
 						username: username,
 						email: email,
-						hashed_password: hashed_password
+						hashed_password: password  // Change 'password' to 'hashed_password'
 					}),
 					headers: {
 						"Content-Type": "application/json",
 					},
 				});
-
+			
 				if (response.ok) {
 					const body = await response.json();
 					setStore({
 						accessToken: body.access_token,
 						user: body.user,
 					});
-
+			
 					localStorage.setItem("accessToken", body.access_token);
 					localStorage.setItem("user", JSON.stringify(body.user));
 				}
-
+			
 				return response;
 			},
+			
 			loadSomeData: () => {
 				fetch("www.thecocktaildb.com/api/json/v1/1/search.php?f=a")
 					.then((response) => response.json())

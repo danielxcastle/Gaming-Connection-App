@@ -17,9 +17,9 @@ export const SignUp = ({ onClose }) => {
             const response = await actions.signUp({
                 username: username,
                 email: email,
-                hashed_password: password
+                password: password  // Change 'hashed_password' to 'password'
             });
-
+    
             if (response.status === 201) {
                 onClose(); 
                 navigate("/"); 
@@ -32,6 +32,7 @@ export const SignUp = ({ onClose }) => {
             }
         }
     };
+    
     return (
         <div className="signup-modal-overlay">
             <div className="signup-modal">

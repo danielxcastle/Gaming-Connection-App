@@ -10,22 +10,28 @@ export const Navbar = () => {
 		navigate("/");
 	};
 	return (
-		<nav className="navbar navbar-light bg-light">
+		<nav className="navbar game-nav">
 			<div className="container">
-				<div>
-				<img 
-					src={logo}
-					className="navbar-brand"
-					onClick={onHome}
-					/>
-					< SearchUser />
-				</div>
-				<div className="ml-auto">
-					<Link to="/demo">
-						<button className="btn btn-primary">Check the Context in action</button>
-					</Link>
+				<div className="row">
+					<div className="col-4">
+						<img
+							src={logo}
+							className="navbar-brand"
+							onClick={onHome}
+						/>
+					</div>
+					<div className="col-4">
+
+						< SearchUser />
+					</div>
+
+					<div className="col-4">
+						<Link to="/demo">
+							<button className="btn btn-primary">Check the Context in action</button>
+						</Link>
+					</div>
 				</div>
 			</div>
-		</nav>
+		</nav >
 	);
 };

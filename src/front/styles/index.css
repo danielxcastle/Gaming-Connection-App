@@ -41,3 +41,9 @@
     max-width: 250px; /* Adjust as needed */
     margin-bottom: 10px;
 }
+.game-nav {
+    background-color: #ff4000;
+    border: .5rem ridge yellow;
+    border-radius: 1rem;
+    margin-top: 50px;
+}
