@@ -233,7 +233,29 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.error('Error:', error);
 					throw error;
 				}
-			}
+			},
+			createPost: async (postData) => {
+                try {
+                    const response = await fetch(`${baseApiUrl}/api/new-post`, {
+                        method: 'POST',
+                        body: JSON.stringify(postData),
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
+                        }
+                    });
+
+                    if (response.ok) {
+                        return response.json();
+                    }
+
+                    throw new Error('Failed to create a new post');
+                } catch (error) {
+                    console.error('Error creating a new post:', error);
+                    throw error;
+                }
+            },
+
 
 		}
 	};

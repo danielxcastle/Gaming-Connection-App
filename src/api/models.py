@@ -4,7 +4,7 @@ from base64 import b64encode
 import os
 from sqlalchemy.orm import relationship
 
-from werkzeug.security import check_password_hash ,generate_password_hash
+from werkzeug.security import check_password_hash, generate_password_hash
 
 db = SQLAlchemy()
 
@@ -13,8 +13,9 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(50), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
-    hashed_password = db.Column(db.String(900), unique=False, nullable=False)    
+    hashed_password = db.Column(db.String(900), unique=False, nullable=False)
     platforms = db.relationship('UserPlatform', backref='user', lazy=True)
+    posts = db.relationship('Post', backref='user', lazy=True)  # Updated relationship for posts
     salt = db.Column(db.String(900), nullable=False)
 
     def __repr__(self):
@@ -25,10 +26,11 @@ class User(db.Model):
             "id": self.id,
             "username": self.username,
             "email": self.email,
-            "platforms": [platform.serialize() for platform in self.platforms]
+            "platforms": [platform.serialize() for platform in self.platforms],
+            "posts": [post.serialize() for post in self.posts]
         }
 
-    def __init__(self, username, hashed_password, email ):
+    def __init__(self, username, hashed_password, email):
         already_exists = User.query.filter_by(username=username).one_or_none()
         if already_exists is not None:
             raise APIException("User already exists", 400)
@@ -42,7 +44,7 @@ class User(db.Model):
         except Exception as e:
             db.session.rollback()
             raise APIException(str(e), 500)
-        
+
     def check_password(self, password_to_check):
         return check_password_hash(self.hashed_password, f"{password_to_check}{self.salt}")
 
@@ -69,6 +71,30 @@ class UserPlatform(db.Model):
         self.user_id = user_id
         self.platform_name = platform_name
         self.username = username
+
+        db.session.add(self)
+        try:
+            db.session.commit()
+        except Exception as e:
+            db.session.rollback()
+            raise APIException(str(e), 500)
+
+class Post(db.Model):
+    __tablename__ = "post"  # Set the table name to "post"
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    content = db.Column(db.Text, nullable=False)
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "user_id": self.user_id,
+            "content": self.content
+        }
+
+    def __init__(self, user_id, content):
+        self.user_id = user_id
+        self.content = content
 
         db.session.add(self)
         try:

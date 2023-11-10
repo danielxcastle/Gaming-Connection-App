@@ -12,6 +12,9 @@ export const Profile = () => {
     const toMyPlatforms = () => {
         navigate('/myplatforms');
     };
+    const toNewPost = () => {
+        navigate('/newpost');
+    };
 
     return (
         <div>
@@ -21,6 +24,10 @@ export const Profile = () => {
             <button
                 className="btn btn-primary"
                 onClick={toMyPlatforms}>My Associated Accounts</button>
+            <button
+                className="btn btn-primary"
+                onClick={toNewPost}
+                >New Post!</button>
         </div>
     );
 };

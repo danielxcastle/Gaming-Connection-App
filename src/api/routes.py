@@ -186,3 +186,32 @@ def search_user():
         return jsonify({'message': 'User not found'}), 404
 
     return jsonify({'user': user.serialize()}), 200
+
+@api.route('/new-post', methods=['POST'])
+@jwt_required()
+def create_post():
+    try:
+        # Get the current user's ID from the JWT token
+        user_id = get_jwt_identity()
+
+        # Use user_id in the rest of the function
+        user = User.query.get(user_id)
+
+        if user is None:
+            raise APIException("No such user!", 404)
+
+        post_data = request.json
+        content = post_data.get("content")
+
+        if not content:
+            raise APIException("Incomplete post data in the request", 400)
+
+        new_post = Post(user_id=user_id, content=content)
+        db.session.add(new_post)
+
+        db.session.commit()
+        return jsonify(message="Post created successfully"), 201
+    except Exception as e:
+        db.session.rollback()
+        raise APIException(str(e), 500)
+
