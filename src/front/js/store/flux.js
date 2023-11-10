@@ -235,26 +235,56 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 			createPost: async (postData) => {
-                try {
-                    const response = await fetch(`${baseApiUrl}/api/new-post`, {
-                        method: 'POST',
-                        body: JSON.stringify(postData),
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
-                        }
-                    });
-
-                    if (response.ok) {
-                        return response.json();
-                    }
-
-                    throw new Error('Failed to create a new post');
-                } catch (error) {
-                    console.error('Error creating a new post:', error);
-                    throw error;
-                }
-            },
+				try {
+					const response = await fetch(`${baseApiUrl}/api/new-post`, {
+						method: 'POST',
+						body: JSON.stringify(postData),
+						headers: {
+							'Content-Type': 'application/json',
+							'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
+						}
+					});
+			
+					if (response.ok) {
+						return response.json();
+					}
+			
+					// Handle specific error cases
+					if (response.status === 401) {
+						throw new Error('Unauthorized: Please log in');
+					} else if (response.status === 403) {
+						throw new Error('Forbidden: You do not have permission to create a post');
+					}
+			
+					const errorData = await response.json();
+					throw new Error(`Failed to create a new post: ${errorData.message}`);
+				} catch (error) {
+					console.error('Error creating a new post:', error);
+					throw error;
+				}
+			},
+			getUserPosts: async (user_id) => {
+				try {
+				  const response = await fetch(`${baseApiUrl}/api/user/${user_id}/posts`, {
+					method: 'GET',
+					headers: {
+					  'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
+					}
+				  });
+			  
+				  if (response.ok) {
+					const posts = await response.json();
+					console.log("User posts:", posts); // Log the response
+					return posts;
+				  }
+			  
+				  throw new Error('Failed to fetch user posts');
+				} catch (error) {
+				  console.error('Error fetching user posts:', error);
+				  throw error;
+				}
+			  },
+			
 
 
 		}

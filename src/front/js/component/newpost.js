@@ -1,5 +1,4 @@
 import React, { useContext, useState } from "react";
-import { useStoreActions } from "../../js/store/flux"; // Import the createPost action
 import { Context } from "../store/appContext";
 
 const NewPost = () => {

@@ -1,10 +1,14 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "../../styles/index.css";
 import logo from "../../img/nav-logo.png";
 import SearchUser from "./searchuser";
 
 export const Navbar = () => {
+	const navigate = useNavigate()
+	const onHome = () => {
+		navigate("/");
+	};
 	return (
 		<nav className="navbar navbar-light bg-light">
 			<div className="container">
@@ -12,10 +16,8 @@ export const Navbar = () => {
 				<img 
 					src={logo}
 					className="navbar-brand"
+					onClick={onHome}
 					/>
-
-				</div>
-				<div>
 					< SearchUser />
 				</div>
 				<div className="ml-auto">

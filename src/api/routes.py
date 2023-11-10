@@ -1,5 +1,6 @@
 from flask import Flask, request, jsonify, Blueprint
-from api.models import db, User, UserPlatform
+from datetime import datetime
+from api.models import db, User, UserPlatform, Post
 from api.utils import generate_sitemap, APIException
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
 
@@ -201,17 +202,54 @@ def create_post():
             raise APIException("No such user!", 404)
 
         post_data = request.json
+        title = post_data.get("title")
         content = post_data.get("content")
 
         if not content:
             raise APIException("Incomplete post data in the request", 400)
 
-        new_post = Post(user_id=user_id, content=content)
+        # Create a new post instance with the current timestamp
+        new_post = Post(user_id=user_id, title=title, content=content, created_at=datetime.utcnow())
+        
+        # Add the new post to the database
         db.session.add(new_post)
-
         db.session.commit()
+
         return jsonify(message="Post created successfully"), 201
     except Exception as e:
         db.session.rollback()
         raise APIException(str(e), 500)
 
+@api.route('/user/<int:user_id>/posts', methods=["GET"])
+@jwt_required()
+def get_user_posts(user_id):
+    try:
+        # Get the current user's ID from the JWT token
+        current_user_id = get_jwt_identity()
+
+        # Check if the current user is authorized to access the posts of the specified user
+        if current_user_id != user_id:
+            raise APIException("Unauthorized access", 401)
+
+        # Retrieve the user from the database
+        user = User.query.get(user_id)
+
+        if user is None:
+            raise APIException("No such user!", 404)
+
+        # Retrieve all posts by the specified user
+        user_posts = Post.query.filter_by(user_id=user_id).all()
+
+        # Serialize the posts for response
+        serialized_posts = [{
+            "id": post.id,
+            "user_id": post.user_id,
+            "title": post.title,
+            "content": post.content,
+            "created_at": post.created_at.strftime("%Y-%m-%d %H:%M:%S")  # Format the timestamp as needed
+        } for post in user_posts]
+
+        return jsonify(posts=serialized_posts), 200
+
+    except Exception as e:
+        raise APIException(str(e), 500)

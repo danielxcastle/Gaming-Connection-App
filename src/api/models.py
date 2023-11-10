@@ -1,4 +1,5 @@
 from flask_sqlalchemy import SQLAlchemy
+from datetime import datetime
 from api.utils import APIException
 from base64 import b64encode
 import os
@@ -80,25 +81,18 @@ class UserPlatform(db.Model):
             raise APIException(str(e), 500)
 
 class Post(db.Model):
-    __tablename__ = "post"  # Set the table name to "post"
+    __tablename__ = "post"
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    title = db.Column(db.String(500), nullable=False)
     content = db.Column(db.Text, nullable=False)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
     def serialize(self):
         return {
             "id": self.id,
             "user_id": self.user_id,
-            "content": self.content
+            "title": self.title,
+            "content": self.content,
+            "created_at": self.created_at.strftime("%Y-%m-%d %H:%M:%S")  # Format the datetime
         }
-
-    def __init__(self, user_id, content):
-        self.user_id = user_id
-        self.content = content
-
-        db.session.add(self)
-        try:
-            db.session.commit()
-        except Exception as e:
-            db.session.rollback()
-            raise APIException(str(e), 500)
