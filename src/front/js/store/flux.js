@@ -21,7 +21,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 			accessToken: undefined,
 			user: undefined,
 			platforms: [],
-			userPlatforms: []
+			userPlatforms: [],
+			baseApiUrl: baseApiUrl
 		},
 
 
@@ -210,7 +211,30 @@ const getState = ({ getStore, getActions, setStore }) => {
                     console.error('Error renaming platform:', error);
                     throw error;
                 }
-            }
+            },
+			// Update the `searchByUsername` function to fetch users by their username
+			searchByUsername: async (username) => {
+				try {
+					const response = await fetch(`${baseApiUrl}/api/search-user?username=${username}`, {
+						method: 'GET',
+						headers: {
+							'Content-Type': 'application/json',
+							// Add any necessary headers like authorization headers if required
+						}
+					});
+				
+					if (!response.ok) {
+						throw new Error('Network response was not ok.');
+					}
+				
+					const data = await response.json();
+					return data; // This return statement is optional, based on your use case
+				} catch (error) {
+					console.error('Error:', error);
+					throw error;
+				}
+			}
+
 		}
 	};
 };

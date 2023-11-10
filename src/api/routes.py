@@ -172,3 +172,17 @@ def get_user_platforms(user_id):
     } for platform in user_platforms]
 
     return jsonify(platforms=serialized_platforms), 200
+
+@api.route('/search-user', methods=["GET"])
+def search_user():
+    username = request.args.get('username')  # Get the username from the query parameter
+
+    if not username:
+        return jsonify({'error': 'No username provided'}), 400
+
+    user = User.query.filter_by(username=username).first()  # Search for the user in the database
+
+    if not user:
+        return jsonify({'message': 'User not found'}), 404
+
+    return jsonify({'user': user.serialize()}), 200
