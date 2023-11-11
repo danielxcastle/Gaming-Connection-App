@@ -18,6 +18,7 @@ export const SignUp = ({ onClose }) => {
                 username: username,
                 email: email,
                 password: password  // Change 'hashed_password' to 'password'
+                
             });
     
             if (response.status === 201) {

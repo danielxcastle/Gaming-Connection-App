@@ -1,4 +1,5 @@
 from flask import Flask, request, jsonify, Blueprint
+from sqlalchemy import or_
 from datetime import datetime
 from api.models import db, User, UserPlatform, Post
 from api.utils import generate_sitemap, APIException

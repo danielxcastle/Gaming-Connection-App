@@ -223,11 +223,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 							// Add any necessary headers like authorization headers if required
 						}
 					});
-				
+			
 					if (!response.ok) {
 						throw new Error('Network response was not ok.');
 					}
-				
+			
 					const data = await response.json();
 					return data; // This return statement is optional, based on your use case
 				} catch (error) {

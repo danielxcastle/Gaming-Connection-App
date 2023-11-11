@@ -21,50 +21,53 @@ export const Navbar = () => {
     };
 
     return (
-        <nav className="navbar ">
-            <div className="container-fluid game-nav navbar-container">
-                <div className="row">
-                    <div className="col-4">
-                        <img
-                            src={logo}
-                            className="navbar-brand"
-                            onClick={onHome}
-                        />
-                    </div>
-                    <div className="col-4">
-                        <SearchUser />
-                    </div>
+        <nav className="navbar navbar-expand-lg game-nav">
+            <div className="container-fluid">
+                <a className="navbar-brand" href="#" onClick={onHome}>
+                    <img
+                        src={logo}
+                        alt="Logo"
+                        width="100"
+                        height="100"
+                        className="d-inline-block align-top"
+                    />
+                   
+                </a>
 
-                    <div className="col-4 login-nav-btn">
-                        <button
-                            onClick={toggleDropdown}
-                            className="btn float-end menu-button">
-                            Menu
-                        </button>
-                        {dropdownOpen && (
-                            <div className="dropdown-content">
-                                <div className="row">
-                                    <div>
-                                        {store.accessToken !== undefined ? (
-                                            <LoggedIn
-                                                style={{
-                                                    width: "300px",
-                                                    height: "300px",
-                                                }}
-                                            />
-                                        ) : (
-                                            <Login
-                                                style={{
-                                                    width: "300px",
-                                                    height: "300px",
-                                                }}
-                                            />
-                                        )}
-                                    </div>
+                <div className="d-flex flex-grow-1 justify-content-center">
+                    <SearchUser />
+                </div>
+
+                <div className="d-flex align-items-center">
+                    <button
+                        onClick={toggleDropdown}
+                        className="btn menu-button"
+                    >
+                        Menu
+                    </button>
+                    {dropdownOpen && (
+                        <div className="dropdown-content">
+                            <div className="row">
+                                <div>
+                                    {store.accessToken !== undefined ? (
+                                        <LoggedIn
+                                            style={{
+                                                width: "300px",
+                                                height: "300px",
+                                            }}
+                                        />
+                                    ) : (
+                                        <Login
+                                            style={{
+                                                width: "300px",
+                                                height: "300px",
+                                            }}
+                                        />
+                                    )}
                                 </div>
                             </div>
-                        )}
-                    </div>
+                        </div>
+                    )}
                 </div>
             </div>
         </nav>

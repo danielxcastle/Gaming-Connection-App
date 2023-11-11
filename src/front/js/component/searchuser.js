@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Context } from '../store/appContext';
 
-const SearchUser = () => {
+export const SearchUser = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [searchResults, setSearchResults] = useState([]);
     const [searchInitiated, setSearchInitiated] = useState(false);
@@ -29,30 +29,32 @@ const SearchUser = () => {
 
     return (
         <div className="search-bar row">
-            <input
-                type="text"
-                value={searchTerm}
-                onChange={e => {
-                    setSearchTerm(e.target.value);
-                    setSearchInitiated(true);
-                }}
-                placeholder="Search users..."
-            />
-            <button onClick={() => setSearchInitiated(true)} className="submit-button">
-                Search
-            </button>
-            <div className="search-results">
-                {searchInitiated && (
-                    <ul>
-                        {searchResults.map(user => (
-                            <li key={user.id}>{user.username}</li>
-                        ))}
-                    </ul>
-                )}
-                {searchInitiated && searchTerm.length > 1 && searchResults.length === 0 && (
-                    <p>No results...</p>
-                )}
+            <div className="input-group">
+                <input
+                    type="text"
+                    value={searchTerm}
+                    onChange={e => {
+                        setSearchTerm(e.target.value);
+                        setSearchInitiated(true);
+                    }}
+                    placeholder="Search users..."
+                    className="form-control"
+                />
+                <button onClick={() => setSearchInitiated(true)} className="submit-button">
+                    Search
+                </button>
             </div>
+
+            {searchInitiated && (
+                <div className="search-results">
+                    {searchResults.map(user => (
+                        <p key={user.id}>{user.level}{user.username}</p>
+                    ))}
+                    {searchTerm.length > 1 && searchResults.length === 0 && (
+                        <p>No results...</p>
+                    )}
+                </div>
+            )}
         </div>
     );
 };

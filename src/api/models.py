@@ -16,8 +16,9 @@ class User(db.Model):
     email = db.Column(db.String(120), unique=True, nullable=False)
     hashed_password = db.Column(db.String(900), unique=False, nullable=False)
     platforms = db.relationship('UserPlatform', backref='user', lazy=True)
-    posts = db.relationship('Post', backref='user', lazy=True)  # Updated relationship for posts
+    posts = db.relationship('Post', backref='user', lazy=True)
     salt = db.Column(db.String(900), nullable=False)
+    level = db.Column(db.String, default=1, nullable=False)  # Add a new column for the user's level
 
     def __repr__(self):
         return f'<User {self.email}>'
@@ -28,7 +29,8 @@ class User(db.Model):
             "username": self.username,
             "email": self.email,
             "platforms": [platform.serialize() for platform in self.platforms],
-            "posts": [post.serialize() for post in self.posts]
+            "posts": [post.serialize() for post in self.posts],
+            "level": self.level  # Include the user's level in the serialization
         }
 
     def __init__(self, username, hashed_password, email):
@@ -39,6 +41,7 @@ class User(db.Model):
         self.hashed_password = generate_password_hash(hashed_password + self.salt)
         self.username = username
         self.email = email
+        self.level = "Peasant"
         db.session.add(self)
         try:
             db.session.commit()
@@ -48,6 +51,7 @@ class User(db.Model):
 
     def check_password(self, password_to_check):
         return check_password_hash(self.hashed_password, f"{password_to_check}{self.salt}")
+
 
 class UserPlatform(db.Model):
     id = db.Column(db.Integer, primary_key=True)
