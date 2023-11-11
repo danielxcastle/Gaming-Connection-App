@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "../../styles/index.css";
 import logo from "../../img/nav-logo.png";
 import SearchUser from "./searchuser";
@@ -21,8 +21,8 @@ export const Navbar = () => {
     };
 
     return (
-        <nav className="navbar game-nav">
-            <div className="container navbar-container">
+        <nav className="navbar ">
+            <div className="container-fluid game-nav navbar-container">
                 <div className="row">
                     <div className="col-4">
                         <img
@@ -35,15 +35,14 @@ export const Navbar = () => {
                         <SearchUser />
                     </div>
 
-                    <div className="col-4">
+                    <div className="col-4 login-nav-btn">
                         <button
                             onClick={toggleDropdown}
-                            className="dropbtn menu-button ml-auto "
-                        >
+                            className="btn float-end menu-button">
                             Menu
                         </button>
                         {dropdownOpen && (
-                            <div className="dropdown-content ml-auto">
+                            <div className="dropdown-content">
                                 <div className="row">
                                     <div>
                                         {store.accessToken !== undefined ? (

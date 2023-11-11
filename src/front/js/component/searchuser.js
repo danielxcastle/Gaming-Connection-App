@@ -28,13 +28,13 @@ const SearchUser = () => {
     }, [searchTerm, searchInitiated, actions]);
 
     return (
-        <div className="search-bar">
+        <div className="search-bar row">
             <input
                 type="text"
                 value={searchTerm}
                 onChange={e => {
                     setSearchTerm(e.target.value);
-                    setSearchInitiated(false);
+                    setSearchInitiated(true);
                 }}
                 placeholder="Search users..."
             />

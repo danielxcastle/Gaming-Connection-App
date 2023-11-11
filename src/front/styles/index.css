@@ -3,6 +3,7 @@
     max-width: 120px;
     max-height: 120px;
     display: flex;
+    
 }
 
 .signup-modal-overlay {
@@ -51,9 +52,13 @@
 }
 
 .game-nav {
-    background-color: #ff4000;
-    border: .5rem ridge yellow;
-    border-radius: 1rem;
+    background-color: #000000;
+    border: .5rem ridge lightgrey;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-top: 0px;
+
 }
 
 .logged-in-btn {
@@ -182,5 +187,60 @@
 .search-results {
     position: absolute;
     background-color: #FFD757;
-    width: 33%;
+    width: 25%;
+    top: 50%;
+}
+.login-nav-btn {
+    float: right;
+    padding: 0px;
+}
+.search-bar {
+    align-items: center;
+    justify-content: center;
+    float: center;
+}
+.login-nav-btn {
+    position: relative; /* Ensure relative positioning for the parent */
+}
+
+.dropdown-content {
+    position: absolute;
+    top: 43%; /* Position the dropdown below the button */
+    right: 0; /* Adjust the right positioning as needed */
+    z-index: 100; /* Ensure the dropdown is on top of other elements */
+}
+.menu-button {
+    background-color: #fcebfa;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid rgb(52, 255, 238);
+    margin-top: 10px
+}
+.post-content {
+    border: 2px solid black;
+}
+.post-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.post-title {
+    font-size: 8px;
+}
+.new-post {
+    border: 2px solid black;
+    display: flex;
+    width: 90%;
+    flex-direction: column;
+    padding: 20px; /* Add padding for better spacing */
+    justify-content: center;
+    align-items: center;
+}
+
+.new-post-input {
+    width: 100%;
+    max-width: 250px;
+    margin-bottom: 10px;
+    padding: 8px;
+    box-sizing: border-box; /* Include padding and border in the element's total width and height */
 }

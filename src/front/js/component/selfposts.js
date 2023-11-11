@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Context } from '../store/appContext';
 import { useNavigate } from 'react-router-dom';
+import '../../styles/index.css'; // Import your custom CSS file
 
 export const UserPosts = () => {
     const { store, actions } = useContext(Context);
@@ -42,15 +43,16 @@ export const UserPosts = () => {
     return (
         <div>
             <h1>User Posts</h1>
-            <ul>
+            <ul className="post-list"> {/* Add a class to style the list */}
                 {userPosts.map(post => (
-                    <li key={post.id}>
-                        <strong>Post ID: {post.id}</strong>
-                        <p>User ID: {post.user_id}</p>
-                        <strong><h5>Title: {post.title}</h5></strong>
-                        <p>Content: {post.content}</p>
-                        <p>Created At: {post.created_at}</p>
-                    </li>
+                    <div className="container post-content" key={post.id}>
+                        <li>
+                            <strong>Username: {store.user.username}</strong>
+                            <p className='post-title'>Created At: {post.created_at}</p>
+                            <strong><h5>Title: {post.title}</h5></strong>
+                            <p>Content: {post.content}</p>
+                        </li>
+                    </div>
                 ))}
             </ul>
         </div>
