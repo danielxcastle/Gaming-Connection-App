@@ -264,6 +264,27 @@ const getState = ({ getStore, getActions, setStore }) => {
 					throw error;
 				}
 			},
+			searchByUsername: async (username) => {
+				try {
+					const response = await fetch(`${baseApiUrl}/api/search-user?username=${username}`, {
+						method: 'GET',
+						headers: {
+							'Content-Type': 'application/json',
+							// Add any necessary headers like authorization headers if required
+						}
+					});
+			
+					if (!response.ok) {
+						throw new Error('Network response was not ok.');
+					}
+			
+					const data = await response.json();
+					return data; // This return statement is optional, based on your use case
+				} catch (error) {
+					console.error('Error:', error);
+					throw error;
+				}
+			},
 			getUserPosts: async (user_id) => {
 				try {
 				  const response = await fetch(`${baseApiUrl}/api/user/${user_id}/posts`, {

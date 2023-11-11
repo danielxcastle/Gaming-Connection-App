@@ -17,6 +17,7 @@ import { Profile } from "./pages/profile";
 import  MyPlatforms  from "./pages/myplatforms";
 import NewPost from "./component/newpost";
 import { UserPosts } from "./component/selfposts";
+import PublicProfile from "./pages/publicprofile";
 
 //create your first component
 const Layout = () => {
@@ -39,6 +40,7 @@ const Layout = () => {
                         <Route element={<UserPosts />} path="/user/:userId/posts" />
                         <Route element={<Profile />} path="/profile" />
                         <Route element={<MyPlatforms />} path="/myplatforms" />
+                        <Route element={<PublicProfile />} path="/publicprofile/:userId" />
                         <Route element={<NewPost />} path="/newpost" />
                         <Route element={<Demo />} path="/demo" />
                         <Route element={<Single />} path="/single/:theid" />

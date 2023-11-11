@@ -1,12 +1,16 @@
 import React, { useState } from 'react';
 import "../../styles/home.css";
-import { Login } from '../component/login';
+
 
 
 export const Home = () => {
   return (
-    <div>
-      <Login />
+    <div className='container'>
+      <div className='row'>
+        <div className='col-12'>
+          <h1>Hello!!!</h1>
+        </div>
+      </div>
     </div>
   );
 }
