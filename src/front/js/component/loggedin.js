@@ -31,7 +31,11 @@ export const LoggedIn = (props) => {
                 />
             </div>
             <div>
+<<<<<<< HEAD
                 <h6>{"Welcome " + store?.user?.name + "!"}</h6>
+=======
+                <h6>{"Welcome " + store?.user?.username + "!"}</h6>
+>>>>>>> daniel
             </div>
             <div className="button-group">
                 <div>

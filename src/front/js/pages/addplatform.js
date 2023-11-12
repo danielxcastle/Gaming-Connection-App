@@ -22,13 +22,15 @@ export const AddPlatform = () => {
             navigate('/');
         }
     }, [store.accessToken, navigate]);
+
+    
     
     const onSubmit = async (event) => {
         event.preventDefault();
         try {
-            const user_id = store.user.id; // Ensure that 'user' and 'id' exist in the store and have the correct values
+            const user_id = store.user.id;
 
-            const platform_name = formData.selectedPlatform || 'Some Platform'; // Default if nothing is selected
+            const platform_name = formData.selectedPlatform || 'Some Platform';
 
             const response = await actions.addPlatform({
                 user_id,
@@ -38,7 +40,7 @@ export const AddPlatform = () => {
             });
 
             if (response.status === 201) {
-                navigate('/');
+                navigate('/profile');
             }
         } catch (error) {
             console.error('Error adding platform:', error);
@@ -47,37 +49,42 @@ export const AddPlatform = () => {
     };
 
     return (
-        <div>
-            <h2>Add User Platform</h2>
-            <form onSubmit={onSubmit}>
-                <div>
-                    <h3>Choose Platform:</h3>
-                    {allPlatforms.map(platform => (
-                        <label key={platform}>
+        <div className="container">
+            <div className="row">
+                <div className="col-4">
+                    <h2>Add User Platform</h2>
+                    <form onSubmit={onSubmit}>
+                        <div>
+                            <h3>Choose Platform:</h3>
+                            {allPlatforms.map(platform => (
+                                <label key={platform}>
+                                    <input
+                                        type="radio"
+                                        name="platform"
+                                        value={platform}
+                                        checked={formData.selectedPlatform === platform}
+                                        onChange={handleInputChange}
+                                    />
+                                    <i className={formData.selectedPlatform === "nintendo" ? 'fa-solid fa-gamepad' : `fab fa-${platform}`}></i>
+                                    {platform.charAt(0).toUpperCase() + platform.slice(1)}
+                                </label>
+                            ))}
+                        </div>
+
+                        <label>
+                            Username:
                             <input
-                                type="radio"
-                                name="platform"
-                                value={platform}
-                                checked={formData.selectedPlatform === platform}
-                                onChange={handleInputChange}
+                                type="text"
+                                name="username"
+                                value={formData.username}
+                                onChange={e => setFormData({ ...formData, username: e.target.value })}
                             />
-                            <i className={`fab fa-${platform}`}></i> {/* Font Awesome icon */}
-                            {platform.charAt(0).toUpperCase() + platform.slice(1)}
                         </label>
-                    ))}
+                        <div></div>
+                        <button type="submit">Add Platform</button>
+                    </form>
                 </div>
-                <label>
-                    Username:
-                    <input
-                        type="text"
-                        name="username"
-                        value={formData.username}
-                        onChange={e => setFormData({ ...formData, username: e.target.value })}
-                    />
-                </label>
-                <div></div>
-                <button type="submit">Add Platform</button>
-            </form>
+            </div>
         </div>
     );
 };

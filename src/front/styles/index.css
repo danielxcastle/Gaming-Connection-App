@@ -262,3 +262,8 @@
     background-color: lightgray;
     border: 2px solid black;
 }
+.my-platforms {
+    border: 2px solid black;
+    background-color: lightgray;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
