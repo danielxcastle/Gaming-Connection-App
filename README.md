@@ -1,9 +1,12 @@
 # GameCon(Gamer Connections)
 
 Where gamers can find other gamers based on gamertags!(xbox, playstation, discord, etc...)
+---
 To start the backend run: 
 ---
 pipenv run start 
+---
+Grab that api link and put it under "BACKEND_URL" in the .env file
 ---
 in the terminal. set the 3001 port to public. 
 Then, start the front end with: 
