@@ -127,9 +127,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 				setStore({ demo: demo });
 			},
 			addPlatform: async ({ user_id, platform_name, username }) => {
-<<<<<<< Updated upstream
-                try {
-                    const response = await fetch(`${baseApiUrl}/api/sign-up-platform`, {
+
+				try {
+					const response = await fetch(`${baseApiUrl}/api/add-platform/${user_id}`, {
                         method: 'POST',
                         body: JSON.stringify({ user_id, platform_name, username }),
                         headers: {
@@ -138,9 +138,9 @@ const getState = ({ getStore, getActions, setStore }) => {
                         }
                     });
                     if (response.ok) {
-                        // Example: get updated user platforms and update the store accordingly
-                        // const updatedPlatforms = await actions.getUserPlatforms();
-                        // setStore({ platforms: updatedPlatforms });
+                        
+                        const updatedPlatforms = await actions.getUserPlatforms();
+                        setStore({ platforms: updatedPlatforms });
                         return response.json();
                     }
                     throw new Error('Failed to add platform');
@@ -148,28 +148,8 @@ const getState = ({ getStore, getActions, setStore }) => {
                     console.error('Error adding platform:', error);
                     throw error;
                 }
-            },
-=======
-				try {
-					const response = await fetch(`${baseApiUrl}/api/user/${user_id}/platforms`, {
-						method: 'POST',
-						body: JSON.stringify({ user_id, platform_name, username }), // Adjusted here
-						headers: {
-							'Content-Type': 'application/json',
-							'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
-						}
-					});
-			
-					if (response.ok) {
-						const responseBody = await response.json();
 
-						return responseBody;
-					}
-					throw new Error('Failed to add platform');
-				} catch (error) {
-					console.error('Error adding platform:', error);
-					throw error;
-				}
+				
 			},
 			getMyPlatforms: async () => {
 				try {
@@ -193,7 +173,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 			
->>>>>>> Stashed changes
+
 
             // New action to delete a platform
             deletePlatform: async (platform_id) => {

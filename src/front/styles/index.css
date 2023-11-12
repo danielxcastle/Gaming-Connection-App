@@ -37,3 +37,223 @@
     max-width: 250px; /* Adjust as needed */
     margin-bottom: 10px;
 }
+
+.game-nav {
+    background-color: #000000;
+    border: .5rem ridge lightgrey;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-top: 0px;
+
+}
+
+.logged-in-btn {
+    width: 90px;
+}
+
+
+
+/* Add this to your CSS file or style section */
+.login-container {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: #f8f9fa;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    height: 270px;
+    width: 250px;
+    z-index: 1000;
+    border: 2px solid black;
+    display: flex;
+    flex-direction: column; /* Align children in a column */
+    align-items: center; /* Center content horizontally */
+    padding: 20px; /* Adjust the padding as needed */
+    justify-content: center;
+    
+}
+
+.profile-pic {
+    max-width: 150px;
+    max-height: 150px;
+    flex: content;
+  }
+
+  /* Add this to your CSS file or style section */
+
+.profile-pic {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+  }
+  
+  .logged-in-container {
+    background-color: #f8f9fa;
+    
+    
+    
+  }
+  
+  .logged-in-btn {
+    
+    
+    font-size: x-small;
+  }
+  
+  /* Center the content vertically and horizontally */
+
+  .login-container form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 10px; /* Add some margin to create space between form elements */
+}
+
+.login-container form input,
+.login-container form button {
+    width: 100%;
+    max-width: 250px;
+    margin-bottom: 10px;
+    padding: 8px; /* Add some padding for better visual appeal */
+}
+.logged-in-container {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: #f8f9fa;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    height: 270px;
+    width: 250px;
+    z-index: 1000;
+    border: 2px solid black;
+    display: flex;
+    flex-direction: column; /* Align children in a column */
+    align-items: center; /* Center content horizontally */
+    padding: 20px; /* Adjust the padding as needed */
+    justify-content: center;
+}
+
+.profile-pic {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+}
+
+.logged-in-btn {
+    width: 100%;
+    max-width: 150px; /* Adjust as needed */
+    margin: 10px 0; /* Add space above and below the buttons */
+}
+
+.button-group {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.button-group button {
+    flex: 1;
+}
+
+/* Add other styling as needed */
+
+/* Center the content vertically and horizontally */
+.center-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.flex-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.search-results {
+    position: absolute;
+    background-color: white;
+    width: 100%;
+    max-width: 250px;
+    display: flex;
+    top: 67%;
+}
+
+
+.login-nav-btn {
+    float: right;
+    padding: 0px;
+}
+.search-bar {
+    align-items: center;
+    justify-content: center;
+    float: center;
+}
+.submit-button {
+    border: 3px solid lightgray;
+}
+.login-nav-btn {
+    position: relative; /* Ensure relative positioning for the parent */
+}
+
+.dropdown-content {
+    position: absolute;
+    top: 67%; /* Position the dropdown below the button */
+    right: 0; /* Adjust the right positioning as needed */
+    z-index: 100; /* Ensure the dropdown is on top of other elements */
+}
+.menu-button {
+    background-color: #f8f9fa;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid ;
+    margin-top: 10px
+}
+.post-content {
+    border: 2px solid black;
+}
+.post-title {
+    font-size: 8px;
+}
+.new-post {
+    border: 2px solid black;
+    display: flex;
+    width: 90%;
+    flex-direction: column;
+    padding: 20px; /* Add padding for better spacing */
+    justify-content: center;
+    align-items: center;
+    background-color: lightgray;
+}
+
+.new-post-input {
+    width: 100%;
+    max-width: 250px;
+    margin-bottom: 10px;
+    padding: 8px;
+    box-sizing: border-box; /* Include padding and border in the element's total width and height */
+}
+.post-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.home-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 5%;
+    margin-left: 15%;
+    margin-right: 15%;    
+    background-color: lightgray;
+    border: 2px solid black;
+}
+.my-platforms {
+    border: 2px solid black;
+    background-color: lightgray;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
