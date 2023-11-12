@@ -1,7 +1,7 @@
 /* CSS */
 .navbar-brand {
-    max-width: 120px;
-    max-height: 120px;
+    max-width: 200px;
+    max-height: 200px;
     display: flex;
     
 }
@@ -54,7 +54,7 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    margin-top: 0px;
+    max-height: 130px;
 
 }
 
@@ -256,7 +256,8 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    margin-top: 5%;
+    margin-top: 1%;
+    margin-bottom: 1%;
     margin-left: 15%;
     margin-right: 15%;    
     background-color: lightgray;
@@ -266,4 +267,20 @@
     border: 2px solid black;
     background-color: lightgray;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+.signupbanner {
+    max-width: 100%; /* Set the maximum width to 100% of its container */
+    height: auto;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
+.home-welcome {
+    padding-top: 2rem;
+    text-align: center;
+}
+.footer {
+    color: #FFD457;
+}
+.footer-text {
+    margin-top: 1rem;
 }

@@ -21,7 +21,7 @@ export const Navbar = () => {
     };
 
     return (
-        <nav className="navbar navbar-expand-lg game-nav">
+        <nav className="navbar game-nav">
             <div className="container-fluid">
                 <a className="navbar-brand" href="#" onClick={onHome}>
                     <img
