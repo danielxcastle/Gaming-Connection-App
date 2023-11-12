@@ -28,11 +28,7 @@ export const Profile = () => {
     };
 
     return (
-<<<<<<< HEAD
-        <div>
-=======
         <div className="container">
->>>>>>> daniel
             <button className="btn btn-primary" onClick={toAddPlatform}>
                 Add an Account!
             </button>
@@ -43,11 +39,7 @@ export const Profile = () => {
                 New Post!
             </button>
             {showNewPostModal && <NewPost onClose={closeNewPostModal} />}
-<<<<<<< HEAD
-            <UserPosts />
-=======
             <center><UserPosts /></center>
->>>>>>> daniel
         </div>
     );
 };

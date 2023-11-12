@@ -47,15 +47,6 @@ export const MyPlatforms = () => {
 
         const fetchUserPlatforms = async () => {
             try {
-<<<<<<< Updated upstream
-                if (store && store.accessToken !== undefined && store.user && store.user.id !== undefined) {
-                    const response = await fetch(`${store.baseApiUrl}/api/user/${store.user.id}/platforms`, {
-                        headers: {
-<<<<<<< HEAD
-                            'Authorization': `Bearer ${store.accessToken}`                            
-=======
-                            'Authorization': `Bearer ${store.accessToken}`
-=======
                 const accessToken = store && store.accessToken;
                 const userId = store && store.user && store.user.id;
 
@@ -63,8 +54,6 @@ export const MyPlatforms = () => {
                     const response = await fetch(`${store.baseApiUrl}/api/user/${userId}/platforms`, {
                         headers: {
                             'Authorization': `Bearer ${accessToken}`
->>>>>>> Stashed changes
->>>>>>> daniel
                         }
                     });
 
