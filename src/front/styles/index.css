@@ -282,7 +282,11 @@
 }
 .footer {
     color: #FFD457;
-}
-.footer-text {
-    margin-top: 1rem;
+    position: sticky; 
+    bottom: 0; 
+    height: 40px; 
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
 }

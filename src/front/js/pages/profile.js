@@ -26,9 +26,15 @@ export const Profile = () => {
         // Close the NewPost modal
         setShowNewPostModal(false);
     };
+    const toLevels = () => {
+        navigate('/levels');
+    }
 
     return (
         <div className="container">
+            <button className="btn btn-primary" onClick={toLevels}>
+                View Levels
+            </button>
             <button className="btn btn-primary" onClick={toAddPlatform}>
                 Add an Account!
             </button>
