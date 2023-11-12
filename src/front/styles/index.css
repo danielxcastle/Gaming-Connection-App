@@ -68,12 +68,13 @@
 .login-container {
     position: absolute;
     top: 0;
+    margin-top: 10px;
     right: 0;
     background-color: #f8f9fa;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
     height: 270px;
     width: 250px;
-    z-index: 1000;
+    z-index: 100;
     border: 2px solid black;
     display: flex;
     flex-direction: column; /* Align children in a column */
@@ -135,6 +136,7 @@
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
     height: 270px;
     width: 250px;
+    margin-top: 10px;
     z-index: 1000;
     border: 2px solid black;
     display: flex;
