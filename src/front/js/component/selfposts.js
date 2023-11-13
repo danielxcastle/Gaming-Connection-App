@@ -41,7 +41,7 @@ export const UserPosts = () => {
     }, [store && store.accessToken, store && store.user && store.user.id, store, actions]);
 
     return (
-        <div>
+        <div className="self-post">
             <h1>User Posts</h1>
             <ul className="post-list"> {/* Add a class to style the list */}
                 {userPosts.map(post => (

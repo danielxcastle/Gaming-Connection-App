@@ -29,10 +29,10 @@ export const NewPost = () => {
 
     // Return JSX for the NewPost component
     return (
-        <div className="row justify-content-center">
-            <div className="col-12 col-md-8">
-                <h1>New Post</h1>
+        <div className="row">
+            <div className="col-12">
                 <form onSubmit={handleSubmit} className="new-post">
+                <h1>New Post</h1>
                     <label>
                         Title:
                         <input type="text" className="new-post-input" value={title} onChange={(e) => setTitle(e.target.value)} />

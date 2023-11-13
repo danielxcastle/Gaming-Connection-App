@@ -290,3 +290,25 @@
     align-items: center;
     text-align: center;
 }
+.profile-btn {
+    background-color: #000000;
+    color: #F8F9FA;
+    padding-top: 5px;
+}
+.profile-btn:hover {
+    color: #000000;
+    background-color: #F8F9FA;
+}
+
+
+.new-post {
+    position: absolute;
+}
+.profile-button-container {
+    background-color: black;
+    max-height: 42px;
+    border-bottom: 2px solid lightgray;
+}
+.self-post {
+    margin-top: 3rem;
+}

@@ -31,21 +31,23 @@ export const Profile = () => {
     }
 
     return (
-        <div className="container">
-            <button className="btn btn-primary" onClick={toLevels}>
+        <div className="profile-button-container">
+            <div className="container">
+            <button className="btn profile-btn" onClick={toLevels}>
                 View Levels
             </button>
-            <button className="btn btn-primary" onClick={toAddPlatform}>
+            <button className="btn profile-btn" onClick={toAddPlatform}>
                 Add an Account!
             </button>
-            <button className="btn btn-primary" onClick={toMyPlatforms}>
+            <button className="btn profile-btn" onClick={toMyPlatforms}>
                 My Associated Accounts
             </button>
-            <button className="btn btn-primary" onClick={toNewPost}>
+            <button className="btn profile-btn" onClick={toNewPost}>
                 New Post!
             </button>
             {showNewPostModal && <NewPost onClose={closeNewPostModal} />}
             <center><UserPosts /></center>
+        </div>
         </div>
     );
 };
