@@ -254,3 +254,74 @@ def get_user_posts(user_id):
 
     except Exception as e:
         raise APIException(str(e), 500)
+
+@api.route('/add-friend/<int:friend_id>', methods=["POST"])
+@jwt_required()
+def add_friend(friend_id):
+    # Get the current user's ID from the JWT token
+    current_user_id = get_jwt_identity()
+
+    # Logic to add friend (assuming you have a User model)
+    current_user = User.query.get(current_user_id)
+    friend_to_add = User.query.get(friend_id)
+
+    if not friend_to_add:
+        raise APIException("Friend not found", 404)
+
+    # Check if the user is not already friends with the specified friend
+    if friend_to_add not in current_user.friends:
+        current_user.friends.append(friend_to_add)
+        db.session.commit()
+
+        return jsonify(message="Friend added successfully"), 200
+
+    return jsonify(message="User is already friends with this user"), 400
+
+@api.route('/user/<int:user_id>/friends', methods=["GET"])
+def get_friends(user_id):
+    user = User.query.get(user_id)
+
+    if user is None:
+        raise APIException("No such user!", 404)
+
+    friends = user.friends.all()  # Assuming that `friends` is a relationship in your User model
+
+    return jsonify({"friends": [friend.serialize() for friend in friends]}), 200
+
+
+
+@api.route('/delete-friend/<int:friend_id>', methods=["DELETE"])
+@jwt_required()
+def delete_friend(friend_id):
+    # Get the current user's ID from the JWT token
+    current_user_id = get_jwt_identity()
+
+    # Logic to delete friend
+    current_user = User.query.get(current_user_id)
+    friend_to_delete = User.query.get(friend_id)
+
+    if not friend_to_delete:
+        raise APIException("Friend not found", 404)
+
+    # Check if the user is friends with the specified friend before deleting
+    if friend_to_delete in current_user.friends:
+        current_user.friends.remove(friend_to_delete)
+        db.session.commit()
+
+        return jsonify(message="Friend deleted successfully"), 200
+
+    return jsonify(message="User is not friends with this user"), 400
+
+@api.route('/user/<int:user_id>', methods=["GET"])
+def get_user(user_id):
+    user = User.query.get(user_id)
+
+    if user is None:
+        # Consider using a more informative error message
+        raise APIException("User not found", 404)
+
+    # Serialize the user data
+    user_data = user.serialize()
+
+    # Return the serialized user data with a 200 status
+    return jsonify(user_data), 200

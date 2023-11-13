@@ -9,6 +9,12 @@ from werkzeug.security import check_password_hash, generate_password_hash
 
 db = SQLAlchemy()
 
+friendship_association_table = db.Table(
+    'friendships',
+    db.Column('user_id', db.Integer, db.ForeignKey('user.id'), primary_key=True),
+    db.Column('friend_id', db.Integer, db.ForeignKey('user.id'), primary_key=True)
+)
+
 class User(db.Model):
     __tablename__ = "user"
     id = db.Column(db.Integer, primary_key=True)
@@ -20,6 +26,16 @@ class User(db.Model):
     salt = db.Column(db.String(900), nullable=False)
     level = db.Column(db.String, default=1, nullable=False)  # Add a new column for the user's level
 
+    # Add a new relationship for friends
+    friends = db.relationship(
+        'User',
+        secondary=friendship_association_table,
+        primaryjoin=id == friendship_association_table.c.user_id,
+        secondaryjoin=id == friendship_association_table.c.friend_id,
+        backref=db.backref('friendships', lazy='dynamic'),
+        lazy='dynamic'
+    )
+
     def __repr__(self):
         return f'<User {self.email}>'
 
@@ -30,7 +46,8 @@ class User(db.Model):
             "email": self.email,
             "platforms": [platform.serialize() for platform in self.platforms],
             "posts": [post.serialize() for post in self.posts],
-            "level": self.level  # Include the user's level in the serialization
+            "level": self.level,
+            "friends": [friend.username for friend in self.friends.all()]  # Include friends in the serialization
         }
 
     def __init__(self, username, hashed_password, email):
@@ -42,15 +59,13 @@ class User(db.Model):
         self.username = username
         self.email = email
         self.level = "Peasant"
+        self.friends = []  # Initialize the friends list
         db.session.add(self)
         try:
             db.session.commit()
         except Exception as e:
             db.session.rollback()
             raise APIException(str(e), 500)
-
-    def check_password(self, password_to_check):
-        return check_password_hash(self.hashed_password, f"{password_to_check}{self.salt}")
 
 
 class UserPlatform(db.Model):

@@ -47,10 +47,12 @@ export const UserPosts = () => {
                 {userPosts.map(post => (
                     <div className="container post-content" key={post.id}>
                         <li>
-                            <strong>Username: {store.user.username}</strong>
-                            <p className='post-title'>Created At: {post.created_at}</p>
-                            <strong><h5>Title: {post.title}</h5></strong>
-                            <p>Content: {post.content}</p>
+                            <strong className="self-post-title"><h5>{post.title}</h5></strong>
+                            <br></br>
+                            <p className="self-post-username">{store.user.username}</p>
+                            <p className="self-post-time">Created At: {post.created_at}</p>
+                            <br></br>
+                            <p className="self-post-content">{post.content}</p>
                         </li>
                     </div>
                 ))}

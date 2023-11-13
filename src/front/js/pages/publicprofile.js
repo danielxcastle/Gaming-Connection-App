@@ -1,43 +1,49 @@
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import React, { useEffect, useContext } from 'react';
+import { useLocation, useParams } from 'react-router-dom';
+import { Context } from '../store/appContext';
 
-const PublicProfile = () => {
-    const [profileData, setProfileData] = useState(null);
+export const UserProfile = () => {
+    const { store, actions } = useContext(Context);
+    const location = useLocation();
     const { userId } = useParams();
 
     useEffect(() => {
-        // Fetch the public profile data based on the userId
-        const fetchProfileData = async () => {
+        const fetchData = async () => {
             try {
-                // Assuming you have an action named `fetchProfileByUserId` in your actions
-                const response = await actions.fetchProfileByUserId(userId);
-                setProfileData(response); // Set the fetched data to the state
+                const userData = await actions.getUser(userId);
+                console.log('User data in UserProfile component:', userData);
+                const friendsData = await actions.getFriends(userId);
+                console.log('Friends data in UserProfile component:', friendsData);
             } catch (error) {
-                console.error("Error fetching public profile:", error);
-                setProfileData(null);
+                console.error('Error fetching data in UserProfile component:', error);
             }
         };
-
-        // Call the fetchProfileData function when the component mounts or the userId changes
-        fetchProfileData();
-    }, [userId]);
+    
+        fetchData();
+    }, [actions, userId]);
 
     return (
-        <div className="container">
-            <div className="row">
-                <div className="col-12">
-                    {profileData ? (
-                        <>
-                            <h1>Public Profile of {profileData.username}</h1>
-                            {/* Display other profile information as needed */}
-                        </>
-                    ) : (
-                        <p>Loading...</p>
-                    )}
-                </div>
-            </div>
+        <div>
+            <h1>User Profile</h1>
+
+            {/* Check if user data is available before rendering */}
+            {store.user ? (
+                <>
+                    <p>Username: {store.user.username}</p>
+                    <p>Email: {store.user.email}</p>
+                </>
+            ) : (
+                <p>Loading user data...</p>
+            )}
+
+            <h2>Friends</h2>
+            <ul>
+                {store.friends?.map(friend => (
+                    <li key={friend.id}>{friend.username}</li>
+                ))}
+            </ul>
         </div>
     );
 };
 
-export default PublicProfile;
+export default UserProfile;

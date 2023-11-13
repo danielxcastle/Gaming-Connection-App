@@ -22,7 +22,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 			user: undefined,
 			platforms: [],
 			userPlatforms: [],
-			baseApiUrl: baseApiUrl
+			baseApiUrl: baseApiUrl,
+			friends: []
 		},
 
 
@@ -305,7 +306,88 @@ const getState = ({ getStore, getActions, setStore }) => {
 				  console.error('Error fetching user posts:', error);
 				  throw error;
 				}
-			  },
+			  },addFriend: async (friendId) => {
+                try {
+                    const response = await fetch(`${baseApiUrl}/api/add-friend/${friendId}`, {
+                        method: 'POST',
+                        headers: {
+                            'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
+                        }
+                    });
+
+                    if (response.ok) {
+                        return response.json();
+                    }
+
+                    throw new Error('Failed to add friend');
+                } catch (error) {
+                    console.error('Error adding friend:', error);
+                    throw error;
+                }
+            },
+
+            deleteFriend: async (friendId) => {
+                try {
+                    const response = await fetch(`${baseApiUrl}/api/delete-friend/${friendId}`, {
+                        method: 'DELETE',
+                        headers: {
+                            'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
+                        }
+                    });
+
+                    if (response.ok) {
+                        return response.json();
+                    }
+
+                    throw new Error('Failed to delete friend');
+                } catch (error) {
+                    console.error('Error deleting friend:', error);
+                    throw error;
+                }
+            },
+			// Inside actions object in getState function in appContext.js
+			getUser: async (userId) => {
+				try {
+					const response = await fetch(`${baseApiUrl}/api/user/${userId}`);
+					if (response.ok) {
+						const userData = await response.json();
+						
+						// Log the current store state before updating
+						console.log('Store state before setting user:', getStore());
+			
+						setStore({ user: userData });
+			
+						// Log the current store state after updating
+						console.log('Store state after setting user:', getStore());
+			
+						return userData;
+					}
+					throw new Error('Failed to fetch user data');
+				} catch (error) {
+					console.error('Error fetching user data:', error);
+					throw error;
+				}
+			},
+
+			getFriends: async (userId) => {
+				try {
+					const response = await fetch(`${baseApiUrl}/api/user/${userId}/friends`, {
+						headers: {
+							'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
+						}
+					});
+					if (response.ok) {
+						const friendsData = await response.json();
+						setStore({ friends: friendsData.friends });
+						return friendsData.friends;
+					}
+					throw new Error('Failed to fetch user friends');
+				} catch (error) {
+					console.error('Error fetching user friends:', error);
+					throw error;
+				}
+			},
+
 			
 
 

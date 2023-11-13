@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
+import { Link } from 'react-router-dom'; // Import Link
 import { Context } from '../store/appContext';
 
 export const SearchUser = () => {
@@ -33,7 +34,7 @@ export const SearchUser = () => {
                 <input
                     type="text"
                     value={searchTerm}
-                    onChange={e => {
+                    onChange={(e) => {
                         setSearchTerm(e.target.value);
                         setSearchInitiated(true);
                     }}
@@ -47,12 +48,15 @@ export const SearchUser = () => {
 
             {searchInitiated && (
                 <div className="search-results">
-                    {searchResults.map(user => (
-                        <p key={user.id}>{user.level}{user.username}</p>
+                    {searchResults.map((user) => (
+                        <p key={user.id}>
+                            {/* Link to the user's profile page */}
+                            <Link to={`/publicprofile/${user.id}`}>
+                                {user.level} {user.username}
+                            </Link>
+                        </p>
                     ))}
-                    {searchTerm.length > 1 && searchResults.length === 0 && (
-                        <p>No results...</p>
-                    )}
+                    {searchTerm.length > 1 && searchResults.length === 0 && <p>No results...</p>}
                 </div>
             )}
         </div>

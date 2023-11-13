@@ -235,7 +235,7 @@
     display: flex;
     width: 90%;
     flex-direction: column;
-    padding: 20px; /* Add padding for better spacing */
+    padding-top: 3rem; /* Add padding for better spacing */
     justify-content: center;
     align-items: center;
     background-color: lightgray;
@@ -252,6 +252,8 @@
     list-style: none;
     padding: 0;
     margin: 0;
+    letter-spacing: 1px;
+    
 }
 .home-container {
     display: flex;
@@ -311,8 +313,26 @@
 }
 .self-post {
     margin-top: 3rem;
+    padding-left: 15%;
+    padding-right: 15%;
 }
 .login-btn:hover {
     border: 2px solid black;
     
+}
+.self-post-username {
+    border-top: 1px solid lightgray;
+    text-align: start;
+}
+.self-post-time {
+    font-size: 8px;
+    font-style: italic;
+    text-align: start;
+}
+.self-post-title {
+    text-align: start;
+    border-bottom: 1px solid lightgray;
+}
+.self-post-content {
+    text-align: start;
 }
