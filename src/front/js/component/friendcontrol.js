@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
+import { Context } from '../store/appContext';
 
 export const FriendActions = ({ friendId, isFriend }) => {
     const [loading, setLoading] = useState(false);
+    const { actions } = useContext(Context);
 
     const handleAddFriend = async () => {
         setLoading(true);

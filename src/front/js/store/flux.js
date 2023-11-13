@@ -306,25 +306,28 @@ const getState = ({ getStore, getActions, setStore }) => {
 				  console.error('Error fetching user posts:', error);
 				  throw error;
 				}
-			  },addFriend: async (friendId) => {
-                try {
-                    const response = await fetch(`${baseApiUrl}/api/add-friend/${friendId}`, {
-                        method: 'POST',
-                        headers: {
-                            'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
-                        }
-                    });
 
-                    if (response.ok) {
-                        return response.json();
-                    }
+			  },
+			  addFriend: async (friendId) => {
+				try {
+					const response = await fetch(`${baseApiUrl}/api/add-friend/${friendId}`, {
+						method: 'POST',
+						headers: {
+							'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
+						}
+					});
+			
+					if (response.ok) {
+						return response.json();
+					}
+			
+					throw new Error('Failed to add friend');
+				} catch (error) {
+					console.error('Error adding friend:', error);
+					throw error;
+				}
+			},
 
-                    throw new Error('Failed to add friend');
-                } catch (error) {
-                    console.error('Error adding friend:', error);
-                    throw error;
-                }
-            },
 
             deleteFriend: async (friendId) => {
                 try {
@@ -389,6 +392,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 
 			
+
 
 
 		}

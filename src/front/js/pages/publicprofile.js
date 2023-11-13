@@ -1,6 +1,7 @@
 import React, { useEffect, useContext } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import { Context } from '../store/appContext';
+import FriendActions from '../component/friendcontrol';
 
 export const UserProfile = () => {
     const { store, actions } = useContext(Context);
@@ -35,6 +36,7 @@ export const UserProfile = () => {
             ) : (
                 <p>Loading user data...</p>
             )}
+            <FriendActions />
 
             <h2>Friends</h2>
             <ul>

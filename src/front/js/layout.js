@@ -11,6 +11,7 @@ import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
 import { SignUp } from "./component/signup";
 import { Login } from "./component/login";
+
 import  AddPlatform  from "./pages/addplatform";
 import { Profile } from "./pages/profile";
 import  MyPlatforms  from "./pages/myplatforms";
@@ -18,6 +19,8 @@ import NewPost from "./component/newpost";
 import { UserPosts } from "./component/selfposts";
 import Levels from "./pages/levels";
 import UserProfile from "./pages/publicprofile";
+import FriendActions from "./component/friendcontrol";
+
 
 //create your first component
 const Layout = () => {
@@ -43,6 +46,7 @@ const Layout = () => {
                         <Route element={<MyPlatforms />} path="/myplatforms" />
                         <Route element={<NewPost />} path="/newpost" />
                         <Route element={<Demo />} path="/demo" />
+                        <Route element={<FriendActions />} path="/friendactions" />
                         <Route element={<UserProfile />} path="/publicprofile/:userId" />
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>
