@@ -12,6 +12,17 @@ import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
 import { SignUp } from "./component/signup";
 import { Login } from "./component/login";
+<<<<<<< Updated upstream
+=======
+import  AddPlatform  from "./pages/addplatform";
+import { Profile } from "./pages/profile";
+import  MyPlatforms  from "./pages/myplatforms";
+import NewPost from "./component/newpost";
+import { UserPosts } from "./component/selfposts";
+import Levels from "./pages/levels";
+import UserProfile from "./pages/publicprofile";
+import FriendActions from "./component/friendcontrol";
+>>>>>>> Stashed changes
 
 //create your first component
 const Layout = () => {
@@ -31,7 +42,12 @@ const Layout = () => {
                         <Route element={<Login />} path="/log-in" />
                         <Route element={<SignUp />} path="/sign-up" />
                         <Route element={<Demo />} path="/demo" />
+<<<<<<< Updated upstream
                         <Route element={<Single />} path="/single/:theid" />
+=======
+                        <Route element={<FriendActions />} path="/friendactions" />
+                        <Route element={<UserProfile />} path="/publicprofile/:userId" />
+>>>>>>> Stashed changes
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>
                     <Footer />

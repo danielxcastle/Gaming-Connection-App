@@ -213,7 +213,189 @@ const getState = ({ getStore, getActions, setStore }) => {
                     console.error('Error renaming platform:', error);
                     throw error;
                 }
+<<<<<<< Updated upstream
             }
+=======
+            },
+			// Update the `searchByUsername` function to fetch users by their username
+			searchByUsername: async (username) => {
+				try {
+					const response = await fetch(`${baseApiUrl}/api/search-user?username=${username}`, {
+						method: 'GET',
+						headers: {
+							'Content-Type': 'application/json',
+							// Add any necessary headers like authorization headers if required
+						}
+					});
+			
+					if (!response.ok) {
+						throw new Error('Network response was not ok.');
+					}
+			
+					const data = await response.json();
+					return data; // This return statement is optional, based on your use case
+				} catch (error) {
+					console.error('Error:', error);
+					throw error;
+				}
+			},
+			createPost: async (postData) => {
+				try {
+					const response = await fetch(`${baseApiUrl}/api/new-post`, {
+						method: 'POST',
+						body: JSON.stringify(postData),
+						headers: {
+							'Content-Type': 'application/json',
+							'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
+						}
+					});
+			
+					if (response.ok) {
+						return response.json();
+					}
+			
+					// Handle specific error cases
+					if (response.status === 401) {
+						throw new Error('Unauthorized: Please log in');
+					} else if (response.status === 403) {
+						throw new Error('Forbidden: You do not have permission to create a post');
+					}
+			
+					const errorData = await response.json();
+					throw new Error(`Failed to create a new post: ${errorData.message}`);
+				} catch (error) {
+					console.error('Error creating a new post:', error);
+					throw error;
+				}
+			},
+			searchByUsername: async (username) => {
+				try {
+					const response = await fetch(`${baseApiUrl}/api/search-user?username=${username}`, {
+						method: 'GET',
+						headers: {
+							'Content-Type': 'application/json',
+							// Add any necessary headers like authorization headers if required
+						}
+					});
+			
+					if (!response.ok) {
+						throw new Error('Network response was not ok.');
+					}
+			
+					const data = await response.json();
+					return data; // This return statement is optional, based on your use case
+				} catch (error) {
+					console.error('Error:', error);
+					throw error;
+				}
+			},
+			getUserPosts: async (user_id) => {
+				try {
+				  const response = await fetch(`${baseApiUrl}/api/user/${user_id}/posts`, {
+					method: 'GET',
+					headers: {
+					  'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
+					}
+				  });
+			  
+				  if (response.ok) {
+					const posts = await response.json();
+					console.log("User posts:", posts); // Log the response
+					return posts;
+				  }
+			  
+				  throw new Error('Failed to fetch user posts');
+				} catch (error) {
+				  console.error('Error fetching user posts:', error);
+				  throw error;
+				}
+			  },
+			  addFriend: async (friendId) => {
+				try {
+					const response = await fetch(`${baseApiUrl}/api/add-friend/${friendId}`, {
+						method: 'POST',
+						headers: {
+							'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
+						}
+					});
+			
+					if (response.ok) {
+						return response.json();
+					}
+			
+					throw new Error('Failed to add friend');
+				} catch (error) {
+					console.error('Error adding friend:', error);
+					throw error;
+				}
+			},
+
+            deleteFriend: async (friendId) => {
+                try {
+                    const response = await fetch(`${baseApiUrl}/api/delete-friend/${friendId}`, {
+                        method: 'DELETE',
+                        headers: {
+                            'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
+                        }
+                    });
+
+                    if (response.ok) {
+                        return response.json();
+                    }
+
+                    throw new Error('Failed to delete friend');
+                } catch (error) {
+                    console.error('Error deleting friend:', error);
+                    throw error;
+                }
+            },
+			// Inside actions object in getState function in appContext.js
+			getUser: async (userId) => {
+				try {
+					const response = await fetch(`${baseApiUrl}/api/user/${userId}`);
+					if (response.ok) {
+						const userData = await response.json();
+						
+						// Log the current store state before updating
+						console.log('Store state before setting user:', getStore());
+			
+						setStore({ user: userData });
+			
+						// Log the current store state after updating
+						console.log('Store state after setting user:', getStore());
+			
+						return userData;
+					}
+					throw new Error('Failed to fetch user data');
+				} catch (error) {
+					console.error('Error fetching user data:', error);
+					throw error;
+				}
+			},
+
+			getFriends: async (userId) => {
+				try {
+					const response = await fetch(`${baseApiUrl}/api/user/${userId}/friends`, {
+						headers: {
+							'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
+						}
+					});
+					if (response.ok) {
+						const friendsData = await response.json();
+						setStore({ friends: friendsData.friends });
+						return friendsData.friends;
+					}
+					throw new Error('Failed to fetch user friends');
+				} catch (error) {
+					console.error('Error fetching user friends:', error);
+					throw error;
+				}
+			},
+
+			
+
+
+>>>>>>> Stashed changes
 		}
 	};
 };
