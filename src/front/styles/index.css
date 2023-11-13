@@ -312,3 +312,7 @@
 .self-post {
     margin-top: 3rem;
 }
+.login-btn:hover {
+    border: 2px solid black;
+    
+}

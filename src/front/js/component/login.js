@@ -43,13 +43,13 @@ export const Login = (props) => {
                 value={password}
                 onChange={(event) => setPassword(event.target.value)}
             ></input>
-            <button className="btn btn-primary " onClick={onSubmit}>
+            <button className="btn login-btn " onClick={onSubmit}>
                 Log in
             </button>
-            <button className="btn btn-success " onClick={onSignup}>
+            <button className="btn login-btn" onClick={onSignup}>
                 Sign Up!
             </button>
-            <a>Forgot Password?</a>
+            <button className="btn login-btn">Forgot Password?</button>
 
             {showSignUp && <SignUp onClose={closeSignUpModal} />}
         </div>

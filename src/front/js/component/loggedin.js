@@ -37,14 +37,14 @@ export const LoggedIn = (props) => {
                 <div>
                     <button
                         onClick={onPlatforms}
-                        className="btn btn-primary logged-in-btn"
+                        className="btn login-btn"
                     >
                         My Platforms!
                     </button>
                 </div>
                 <div>
                     <button
-                        className="btn btn-primary logged-in-btn"
+                        className="btn login-btn"
                         onClick={onProfile}
                     >
                         View Profile
@@ -53,7 +53,7 @@ export const LoggedIn = (props) => {
             </div>
             <div>
                 <button
-                    className="btn btn-danger logged-in-btn"
+                    className="btn login-btn"
                     onClick={onSubmit}
                 >
                     Log Out
