@@ -35,6 +35,8 @@ class User(db.Model):
         backref=db.backref('friendships', lazy='dynamic'),
         lazy='dynamic'
     )
+    def check_password(self, password_to_check):
+        return check_password_hash(self.hashed_password, f"{password_to_check}{self.salt}")
 
     def __repr__(self):
         return f'<User {self.email}>'

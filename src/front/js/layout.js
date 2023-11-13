@@ -19,7 +19,7 @@ import NewPost from "./component/newpost";
 import { UserPosts } from "./component/selfposts";
 import Levels from "./pages/levels";
 import UserProfile from "./pages/publicprofile";
-import FriendActions from "./component/friendcontrol";
+import { FriendActions } from "./component/friendcontrol";
 
 
 //create your first component

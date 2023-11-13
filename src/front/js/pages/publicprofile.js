@@ -36,7 +36,7 @@ export const UserProfile = () => {
             ) : (
                 <p>Loading user data...</p>
             )}
-            <FriendActions />
+            {/* <FriendActions /> */}
 
             <h2>Friends</h2>
             <ul>

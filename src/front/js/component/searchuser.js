@@ -1,31 +1,38 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Link } from 'react-router-dom'; // Import Link
+import { Link } from 'react-router-dom';
 import { Context } from '../store/appContext';
 
 export const SearchUser = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [searchResults, setSearchResults] = useState([]);
     const [searchInitiated, setSearchInitiated] = useState(false);
+    const [loading, setLoading] = useState(false);
     const { actions } = useContext(Context);
 
     useEffect(() => {
         const search = async () => {
-            if (searchTerm.length > 1) {
-                try {
+            setLoading(true);
+            try {
+                if (searchTerm.length > 1) {
                     const results = await actions.searchByUsername(searchTerm);
                     setSearchResults(results?.user ? [results.user] : []);
-                } catch (error) {
-                    console.error('Error searching for user:', error);
+                } else {
                     setSearchResults([]);
                 }
-            } else {
+            } catch (error) {
+                console.error('Error searching for user:', error);
                 setSearchResults([]);
+            } finally {
+                setLoading(false);
             }
         };
-
-        if (searchInitiated) {
+    
+        if (searchInitiated && searchTerm !== '') {
             search();
         }
+    
+        // Cleanup function to clear search results on unmount or when the search term changes
+        return () => setSearchResults([]);
     }, [searchTerm, searchInitiated, actions]);
 
     return (
@@ -48,15 +55,16 @@ export const SearchUser = () => {
 
             {searchInitiated && (
                 <div className="search-results">
-                    {searchResults.map((user) => (
-                        <p key={user.id}>
-                            {/* Link to the user's profile page */}
-                            <Link to={`/publicprofile/${user.id}`}>
-                                {user.level} {user.username}
-                            </Link>
-                        </p>
-                    ))}
-                    {searchTerm.length > 1 && searchResults.length === 0 && <p>No results...</p>}
+                    {loading && <p>Loading...</p>}
+                    {!loading &&
+                        searchResults.map((user) => (
+                            <p key={user.id}>
+                                <Link to={`/publicprofile/${user.id}`}>
+                                    {user.level} {user.username}
+                                </Link>
+                            </p>
+                        ))}
+                    {searchTerm.length > 1 && !loading && searchResults.length === 0 && <p>No results...</p>}
                 </div>
             )}
         </div>
