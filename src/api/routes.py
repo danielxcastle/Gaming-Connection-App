@@ -330,3 +330,24 @@ def get_user(user_id):
 
     # Return the serialized user data with a 200 status
     return jsonify(user_data), 200
+
+@api.route('/user/<int:user_id>/friend-posts/<int:friend_id>', methods=["GET"])
+@jwt_required()
+def get_friend_posts(user_id, friend_id):
+    try:
+        # Perform logic to fetch friend posts based on user_id and friend_id
+        # This might involve querying the database to get posts associated with the friend_id
+        friend_posts = get_friend_posts_from_database(user_id, friend_id)
+
+        # Serialize the posts for response
+        serialized_posts = [{
+            "id": post.id,
+            "title": post.title,
+            "content": post.content,
+            "created_at": post.created_at.strftime("%Y-%m-%d %H:%M:%S")
+        } for post in friend_posts]
+
+        return jsonify(posts=serialized_posts), 200
+
+    except Exception as e:
+        return jsonify(error=str(e)), 500

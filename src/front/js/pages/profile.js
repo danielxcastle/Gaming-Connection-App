@@ -3,6 +3,7 @@ import { Context } from '../store/appContext';
 import { useNavigate } from 'react-router-dom';
 import UserPosts from '../component/selfposts';
 import NewPost from '../component/newpost';
+import { FriendPosts } from '../component/friendposts';
 
 export const Profile = () => {
     const { store, actions } = useContext(Context);
@@ -46,6 +47,7 @@ export const Profile = () => {
                 New Post!
             </button>
             {showNewPostModal && <NewPost onClose={closeNewPostModal} />}
+            {/* <center><FriendPosts /></center> */}
             <center><UserPosts /></center>
         </div>
         </div>
